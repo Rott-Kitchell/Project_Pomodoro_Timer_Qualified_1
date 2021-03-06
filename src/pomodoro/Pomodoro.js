@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import classNames from "../utils/class-names";
 import useInterval from "../utils/useInterval";
-import { minutesToDuration, secondsToDuration } from "../utils/duration";
+
+import TimerDurations from "./TimerDurations";
 
 function Pomodoro() {
   const initialState = {
@@ -12,13 +13,7 @@ function Pomodoro() {
   // Timer starts out paused
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [TimerData, setTimerData] = useState({ ...initialState });
-  const handleInOrDe = (event) => {
-    event.preventDefault();
-    console.log(event.target.nodeName);
-    event.target.nodeName === "SPAN"
-      ? console.log(event.target.parentNode.name)
-      : console.log(event.target.name);
-  };
+
   useInterval(
     () => {
       // ToDo: Implement what should happen when the timer is running
@@ -28,78 +23,16 @@ function Pomodoro() {
 
   function playPause() {
     setIsTimerRunning((prevState) => !prevState);
+    setTimerData({ ...TimerData, display: "block" });
   }
 
   return (
     <div className="pomodoro">
-      <div className="row">
-        <div className="col">
-          <div className="input-group input-group-lg mb-2">
-            <span className="input-group-text" data-testid="duration-focus">
-              {/* TODO: Update this text to display the current focus session duration */}
-              Focus Duration: {minutesToDuration(TimerData.focusTime)}
-            </span>
-            <div className="input-group-append">
-              {/* TODO: Implement decreasing focus duration and disable during a focus or break session */}
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-testid="decrease-focus"
-                disabled={isTimerRunning}
-                onClick={handleInOrDe}
-                name="decrease-focus"
-              >
-                <span className="oi oi-minus" />
-              </button>
-              {/* TODO: Implement increasing focus duration  and disable during a focus or break session */}
-              <button
-                type="button"
-                className="btn btn-secondary"
-                data-testid="increase-focus"
-                disabled={isTimerRunning}
-                onClick={handleInOrDe}
-                name="increase-focus"
-              >
-                <span className="oi oi-plus" />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="col">
-          <div className="float-right">
-            <div className="input-group input-group-lg mb-2">
-              <span className="input-group-text" data-testid="duration-break">
-                {/* TODO: Update this text to display the current break session duration */}
-                Break Duration: {minutesToDuration(TimerData.breakTime)}
-              </span>
-              <div className="input-group-append">
-                {/* TODO: Implement decreasing break duration and disable during a focus or break session*/}
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-testid="decrease-break"
-                  disabled={isTimerRunning}
-                  onClick={handleInOrDe}
-                  name="decrease-break"
-                >
-                  <span className="oi oi-minus" name="decrease-break" />
-                </button>
-                {/* TODO: Implement increasing break duration and disable during a focus or break session*/}
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  data-testid="increase-break"
-                  disabled={isTimerRunning}
-                  onClick={handleInOrDe}
-                  name="increase-break"
-                >
-                  <span className="oi oi-plus" name="increase-break" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <TimerDurations
+        TimerData={TimerData}
+        isTimerRunning={isTimerRunning}
+        setTimerData={setTimerData}
+      />
       <div className="row">
         <div className="col">
           <div
@@ -134,7 +67,7 @@ function Pomodoro() {
           </div>
         </div>
       </div>
-      <div style={{ display: `${initialState.display}` }}>
+      <div style={{ display: `${TimerData.display}` }}>
         {/* TODO: This area should show only when a focus or break session is running or pauses */}
         <div className="row mb-2">
           <div className="col">
