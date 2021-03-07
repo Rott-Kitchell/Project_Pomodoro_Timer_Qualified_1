@@ -12,19 +12,27 @@ function TimerDurations({ TimerData, isTimerRunning, setTimerData }) {
     switch (whichButton) {
       case "decrease-focus":
         newTime = Math.max(TimerData.focusTime - 5, 5);
-        setTimerData({ ...TimerData, focusTime: newTime });
+        setTimerData((currentData) => {
+          return { ...currentData, focusTime: newTime };
+        });
         break;
       case "increase-focus":
         newTime = Math.min(TimerData.focusTime + 5, 60);
-        setTimerData({ ...TimerData, focusTime: newTime });
+        setTimerData((currentData) => {
+          return { ...currentData, focusTime: newTime };
+        });
         break;
       case "decrease-break":
         newTime = Math.max(TimerData.breakTime - 1, 1);
-        setTimerData({ ...TimerData, breakTime: newTime });
+        setTimerData((currentData) => {
+          return { ...currentData, breakTime: newTime };
+        });
         break;
       case "increase-break":
         newTime = Math.min(TimerData.breakTime + 1, 15);
-        setTimerData({ ...TimerData, breakTime: newTime });
+        setTimerData((currentData) => {
+          return { ...currentData, breakTime: newTime };
+        });
         break;
       default:
         break;
