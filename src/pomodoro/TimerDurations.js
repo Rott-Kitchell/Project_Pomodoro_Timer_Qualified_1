@@ -13,25 +13,41 @@ function TimerDurations({ TimerData, isTimerRunning, setTimerData }) {
       case "decrease-focus":
         newTime = Math.max(TimerData.focusTime - 5, 5);
         setTimerData((currentData) => {
-          return { ...currentData, focusTime: newTime };
+          return {
+            ...currentData,
+            focusTime: newTime,
+            focusSecs: newTime * 60,
+          };
         });
         break;
       case "increase-focus":
         newTime = Math.min(TimerData.focusTime + 5, 60);
         setTimerData((currentData) => {
-          return { ...currentData, focusTime: newTime };
+          return {
+            ...currentData,
+            focusTime: newTime,
+            focusSecs: newTime * 60,
+          };
         });
         break;
       case "decrease-break":
         newTime = Math.max(TimerData.breakTime - 1, 1);
         setTimerData((currentData) => {
-          return { ...currentData, breakTime: newTime };
+          return {
+            ...currentData,
+            breakTime: newTime,
+            breakSecs: newTime * 60,
+          };
         });
         break;
       case "increase-break":
         newTime = Math.min(TimerData.breakTime + 1, 15);
         setTimerData((currentData) => {
-          return { ...currentData, breakTime: newTime };
+          return {
+            ...currentData,
+            breakTime: newTime,
+            breakSecs: newTime * 60,
+          };
         });
         break;
       default:
