@@ -46,7 +46,7 @@ export default function Display({ TimerData, isTimerRunning, setTimerData }) {
     },
     isTimerRunning ? 1000 : null
   );
-  let bar = `${((counter / currentSession.secs) * 100).toFixed(2)}`;
+  let bar = `${(counter / currentSession.secs) * 100}`;
   return (
     <div style={{ display: `${TimerData.display}` }}>
       {/* TODO: This area should show only when a focus or break session is running or pauses */}
