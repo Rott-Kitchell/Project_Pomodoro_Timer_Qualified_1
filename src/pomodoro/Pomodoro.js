@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import useInterval from "../utils/useInterval";
 import Display from "./Display";
 import TimerDurations from "./TimerDurations";
 import ControlButtons from "./ControlButtons";
@@ -13,23 +12,20 @@ function Pomodoro() {
     focusSecs: 1500,
     breakSecs: 300,
     counter: 0,
+    displayName: "Focusing",
+    onFocus: true,
   };
   // Timer starts out paused
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [TimerData, setTimerData] = useState({ ...initialState });
 
-  useInterval(
-    () => {
-      setTimerData((currentData) => {
-        return { ...currentData, counter: currentData.counter + 1 };
-      });
-    },
-    isTimerRunning ? 100 : null
-  );
-
   function playPause() {
     setIsTimerRunning((prevState) => !prevState);
     setTimerData({ ...TimerData, display: "block" });
+  }
+  function stop() {
+    setTimerData({ ...initialState });
+    setIsTimerRunning(false);
   }
 
   return (
@@ -39,8 +35,16 @@ function Pomodoro() {
         isTimerRunning={isTimerRunning}
         setTimerData={setTimerData}
       />
-      <ControlButtons playPause={playPause} isTimerRunning={isTimerRunning} />
-      <Display TimerData={TimerData} />
+      <ControlButtons
+        playPause={playPause}
+        isTimerRunning={isTimerRunning}
+        stop={stop}
+      />
+      <Display
+        TimerData={TimerData}
+        isTimerRunning={isTimerRunning}
+        setTimerData={setTimerData}
+      />
     </div>
   );
 }

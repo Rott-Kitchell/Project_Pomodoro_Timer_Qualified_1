@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "../utils/class-names";
 
-export default function ControlButtons({ playPause, isTimerRunning }) {
+export default function ControlButtons({ playPause, isTimerRunning, stop }) {
   return (
     <div className="row">
       <div className="col">
@@ -31,6 +31,7 @@ export default function ControlButtons({ playPause, isTimerRunning }) {
             className="btn btn-secondary"
             title="Stop the session"
             disabled={!isTimerRunning}
+            onClick={stop}
           >
             <span className="oi oi-media-stop" />
           </button>
